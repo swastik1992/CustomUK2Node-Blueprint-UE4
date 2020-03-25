@@ -7,6 +7,7 @@
 #include "EdGraph/EdGraph.h"
 #include "KismetCompiler.h"
 #include "CK2NodeBlueprintFunctionLibrary.h"
+#include "AddButtonGraphNode.h"
 
 void UBlueprintSortArrayNode::GetMenuActions(FBlueprintActionDatabaseRegistrar& ActionRegistrar) const
 {
@@ -58,4 +59,31 @@ void UBlueprintSortArrayNode::ExpandNode(class FKismetCompilerContext& CompilerC
 	CompilerContext.MovePinLinksToIntermediate(*ThenPin, *(CallFunctionNode->GetThenPin()));
 
 	BreakAllNodeLinks();
+}
+
+TSharedPtr<SGraphNode> UBlueprintSortArrayNode::CreateVisualWidget()
+{
+	return SNew(SAddButtonGraphNode, this);
+}
+
+void UBlueprintSortArrayNode::AddInputPinToNode()
+{
+	TMap<FString, FStringFormatArg> ArgsString = { {TEXT("Count"),ArgStringInputPinNames.Num()} };
+	FName NewStringPinName(*FString::Format(TEXT("Field {Count}"), ArgsString));
+	UE_LOG(LogTemp, Log, TEXT("AddInputPinToNode(): New Pin's Name is %s"), *NewStringPinName.ToString());
+	ArgStringInputPinNames.Add(NewStringPinName);
+
+	TMap<FString, FStringFormatArg> ArgsBoolean = { {TEXT("Count"),ArgBooleanInputPinNames.Num()} };
+	FName NewBooleanPinName(*FString::Format(TEXT("Ascending Order {Count}"), ArgsBoolean));
+	UE_LOG(LogTemp, Log, TEXT("AddInputPinToNode(): New Pin's Name is %s"), *NewBooleanPinName.ToString());
+	ArgBooleanInputPinNames.Add(NewBooleanPinName);
+	
+	CreatePin(EGPD_Input, UEdGraphSchema_K2::PC_String, NewStringPinName);
+	CreatePin(EGPD_Input, UEdGraphSchema_K2::PC_Boolean, NewBooleanPinName);
+
+}
+
+void UBlueprintSortArrayNode::RemoveInputPinFromNode(UEdGraphPin* Pin)
+{
+
 }
