@@ -18,7 +18,8 @@ public class CustomNodeEditor : ModuleRules
 			"SlateCore",
 			"EditorStyle",
 			"GraphEditor",
-			"KismetCompiler"
+			"KismetCompiler",
+			"ToolMenus"
 
 		});
 	}

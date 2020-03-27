@@ -4,8 +4,8 @@
 
 #include "CoreMinimal.h"
 #include "Kismet/BlueprintFunctionLibrary.h"
+#include  "CustomNodeEditor/BlueprintSortArrayNode.h"//BlueprintSortArrayNode.h"
 #include "CK2NodeBlueprintFunctionLibrary.generated.h"
-
 /**
  * 
  */
@@ -16,7 +16,7 @@ class CUSTOMUK2NODE_API UCK2NodeBlueprintFunctionLibrary : public UBlueprintFunc
 
 public:
 	UFUNCTION(BlueprintCallable, meta = (BlueprintInternalUseOnly = "True"))
-	static void SortArray();
+	static void SortArray(const TArray< FArgsInput>& InArgs);
 
 	
 };

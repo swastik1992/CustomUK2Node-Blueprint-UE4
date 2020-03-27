@@ -4,6 +4,42 @@
 #include "K2Node.h"
 #include "BlueprintSortArrayNode.generated.h"
 
+USTRUCT(BlueprintType)
+struct FArgsInput
+{
+	GENERATED_BODY()
+
+	FArgsInput(){}
+	
+	FArgsInput(const FName& StringName, const FName& BooleanName)
+		: ArgStringInputPinName(StringName), ArgBooleanInputPinName(BooleanName)
+	{}
+
+	UPROPERTY()
+	FName ArgStringInputPinName;
+
+	UPROPERTY()
+	FName ArgBooleanInputPinName;
+};
+
+USTRUCT()
+struct FArgsOutput
+{
+	GENERATED_BODY()
+
+	FArgsOutput() {}
+
+	FArgsOutput(const FName& WildCardName, const FName& BooleanName)
+		: ArgWildCardOutputPinName(WildCardName), ArgBooleanOutputPinName(BooleanName)
+	{}
+
+	UPROPERTY()
+	FName ArgWildCardOutputPinName;
+
+	UPROPERTY()
+	FName ArgBooleanOutputPinName;
+};
+
 UCLASS()
 class CUSTOMNODEEDITOR_API UBlueprintSortArrayNode : public UK2Node
 {
@@ -16,6 +52,7 @@ public:
 	virtual FText GetNodeTitle(ENodeTitleType::Type TitleType) const override { return FText::FromString(TEXT("SORTARRAY")); }
 	virtual void AllocateDefaultPins() override;
 	virtual TSharedPtr<SGraphNode> CreateVisualWidget() override;
+	virtual void GetNodeContextMenuActions(class UToolMenu* Menu, class UGraphNodeContextMenuContext* Context) const override;
 	//End of UEdGraphNode interface
 
 	//UK2Node interface.
@@ -30,9 +67,12 @@ public:
 protected:
 
 	UPROPERTY()
-	TArray<FName> ArgStringInputPinNames;
+	TArray<FArgsInput> ArgsInputArray;
+	
+	UPROPERTY()
+	TArray<FArgsOutput> ArgsOutputArray;
 
 	UPROPERTY()
-	TArray<FName> ArgBooleanInputPinNames;
+	int32 LastIndex;
 };
 
