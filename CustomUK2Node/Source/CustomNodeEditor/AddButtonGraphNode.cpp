@@ -38,7 +38,7 @@ FReply SAddButtonGraphNode::OnAddPin()
 	}
 	
 	SortArrayNode->Modify();
-	SortArrayNode->AddInputPinToNode();
+	SortArrayNode->AddDynamicPinToNode();
 	FBlueprintEditorUtils::MarkBlueprintAsModified(SortArrayNode->GetBlueprint());
 
 	UpdateGraphNode();

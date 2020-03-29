@@ -4,40 +4,22 @@
 #include "K2Node.h"
 #include "BlueprintSortArrayNode.generated.h"
 
-USTRUCT(BlueprintType)
-struct FArgsInput
-{
-	GENERATED_BODY()
-
-	FArgsInput(){}
-	
-	FArgsInput(const FName& StringName, const FName& BooleanName)
-		: ArgStringInputPinName(StringName), ArgBooleanInputPinName(BooleanName)
-	{}
-
-	UPROPERTY()
-	FName ArgStringInputPinName;
-
-	UPROPERTY()
-	FName ArgBooleanInputPinName;
-};
-
 USTRUCT()
-struct FArgsOutput
+struct FArgs
 {
 	GENERATED_BODY()
 
-	FArgsOutput() {}
+	FArgs() {}
 
-	FArgsOutput(const FName& WildCardName, const FName& BooleanName)
-		: ArgWildCardOutputPinName(WildCardName), ArgBooleanOutputPinName(BooleanName)
+	FArgs(const FName& InputArgName, const FName& OutputArgName)
+		: InputArgPinName(InputArgName), OutputArgPinName(OutputArgName)
 	{}
 
 	UPROPERTY()
-	FName ArgWildCardOutputPinName;
+	FName InputArgPinName;
 
 	UPROPERTY()
-	FName ArgBooleanOutputPinName;
+	FName OutputArgPinName;
 };
 
 UCLASS()
@@ -61,16 +43,13 @@ public:
 	virtual void ExpandNode(class FKismetCompilerContext& CompilerContext, UEdGraph* SourceGraph) override;
 	//End of UK2Node interface.
 
-	virtual void AddInputPinToNode();
-	virtual void RemoveInputPinFromNode(UEdGraphPin* Pin);
+	virtual void AddDynamicPinToNode();
+	virtual void RemoveDynamicPinFromNode(UEdGraphPin* Pin);
 
 protected:
 
 	UPROPERTY()
-	TArray<FArgsInput> ArgsInputArray;
-	
-	UPROPERTY()
-	TArray<FArgsOutput> ArgsOutputArray;
+	TArray<FArgs> ArgsArrayNames;
 
 	UPROPERTY()
 	int32 LastIndex;

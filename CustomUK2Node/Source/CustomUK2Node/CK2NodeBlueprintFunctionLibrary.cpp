@@ -7,7 +7,7 @@ void UCK2NodeBlueprintFunctionLibrary::SortArray(const TArray< FArgsInput>& InAr
 {
 	for (const FArgsInput& Arg : InArgs)
 	{
-		UE_LOG(LogTemp, Log, TEXT("Input Field is: %s"), *(Arg.ArgStringInputPinName.ToString()));
-		UE_LOG(LogTemp, Log, TEXT("Input Order is: %s"), *(Arg.ArgStringInputPinName.ToString()));
+		UE_LOG(LogTemp, Log, TEXT("Input Field is: %s"), *(Arg.FieldName));
+		UE_LOG(LogTemp, Log, TEXT("Order is: %s"), (Arg.bAscendingOrder ? TEXT("Ascending") : TEXT("Decending")));
 	}
 }
